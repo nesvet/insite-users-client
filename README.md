@@ -9,5 +9,5 @@ $ npm install insite-users-client
 Or
 
 ```sh
-$ yarn add insite-users-client
+$ bun add insite-users-client
 ```
