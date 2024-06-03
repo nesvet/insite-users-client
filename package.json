@@ -1,11 +1,11 @@
 {
   "name": "insite-users-client",
-  "version": "1.0.27",
+  "version": "1.0.28",
   "description": "inSite users client side",
   "type": "module",
   "main": "./lib/index.js",
   "module": "./lib/index.js",
-  "packageManager": "bun@1.1.9",
+  "packageManager": "bun@1.1.12",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,9 +21,10 @@
   "author": "Eugene Nesvetaev <dev@nesvet.dev> (https://nesvet.dev/)",
   "license": "MIT",
   "dependencies": {
-    "insite-subscriptions-client": "^1"
+    "@nesvet/n": "^1.0.60",
+    "insite-subscriptions-client": "^1.0.295"
   },
   "devDependencies": {
-    "@nesvet/eslint-config": "^1"
+    "@nesvet/eslint-config": "^1.1.0"
   }
 }
