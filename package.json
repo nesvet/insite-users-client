@@ -25,6 +25,6 @@
     "insite-subscriptions-client": "^1.0.295"
   },
   "devDependencies": {
-    "@nesvet/eslint-config": "^1.1.0"
+    "@nesvet/eslint-config": "^2.0.25",
   }
 }
