@@ -1,5 +1,22 @@
+import type { Abilities, AbilitiesSchema } from "insite-common";
+import type { Org } from "./orgs";
+import type { User, UserExtended } from "./users";
+import type { UsersSubscriptionGroup } from "./UsersSubscriptionGroup";
+
+
+export type CurrentUser<AS extends AbilitiesSchema = AbilitiesSchema> = {
+	abilities: Abilities<AS>;
+	sessionId?: string;
+	slaveIds: string[];
+	slavesSnapshot: string;
+	slaves: (Org | User)[];
+	slaveUsers: User[];
+	slaveOrgs: Org[];
+} & UserExtended;
+
+
 /** @this UsersSubscriptionGroup */
-export function handleUser(user) {
+export function handleUser(this: UsersSubscriptionGroup, user: CurrentUser) {
 	if (user) {
 		
 		const slavesSnapshot = user.slaveIds.join(",");

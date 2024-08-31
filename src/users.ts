@@ -1,10 +1,49 @@
 import { removeOne } from "@nesvet/n";
+import type { SubscriptionMapUpdated, SubscriptionMapWithSubscription } from "insite-subscriptions-client";
+import type { NullOrg, Org, Orgs } from "./orgs";
+import type { Role } from "./roles";
+import type { CurrentUser } from "./user";
+import type { UsersSubscriptionGroup } from "./UsersSubscriptionGroup";
+
+
+export type User = {
+	_id: string;
+	isUser: true;
+	email: string;
+	name: {
+		first: string;
+		middle: string;
+		last: string;
+	};
+	orgId: string;
+	job: string;
+	initials: string;
+	displayLabel: string;
+	avatarUrl: string;
+	isOnline: boolean;
+	org: NullOrg | Org;
+};
+
+type UserExtension = {
+	_id: string;
+	roleIds: string[];
+};
+
+export type UserExtended = {
+	roles?: Role;
+} & User;
+
+export type Users = SubscriptionMapWithSubscription<User>;
+
+export type UsersExtended = SubscriptionMapWithSubscription<UserExtended>;
 
 
 /** @this UsersSubscriptionGroup */
-export function handleUsers(updated) {
+export function handleUsers(this: UsersSubscriptionGroup, updated: null | SubscriptionMapUpdated<User>) {
 	if (updated) {
-		const { users, user: currentUser, orgs } = this.values;
+		const users = this.values.users as Users;
+		const currentUser = this.values.user as CurrentUser;
+		const orgs = this.values.orgs as Orgs;
 		
 		if (users.get(currentUser._id) !== currentUser) {
 			users.set(currentUser._id, currentUser);
@@ -24,7 +63,7 @@ export function handleUsers(updated) {
 			user.isUser = true;
 		
 		let shouldUpdateUser;
-		const orgsToSortUsers = new Set();
+		const orgsToSortUsers = new Set<NullOrg | Org>();
 		
 		for (const user of updated) {
 			const org = orgs.get(user.orgId) ?? orgs.null;
@@ -47,7 +86,7 @@ export function handleUsers(updated) {
 		}
 		
 		for (const org of orgsToSortUsers)
-			org.users.sorted.sort(users.sortCompareFunction);
+			org.users.sorted.sort(users.sortCompareFunction!);
 		
 		if (updated.deleted.length)
 			for (const org of [ ...orgs.sorted, orgs.null ])
@@ -67,17 +106,17 @@ export function handleUsers(updated) {
 }
 
 /** @this UsersSubscriptionGroup */
-export function handleExtendedUsers(updated) {
+export function handleExtendedUsers(this: UsersSubscriptionGroup, updated: null | SubscriptionMapUpdated<UserExtension>) {
 	
-	const { users } = this.values;
+	const users = this.values.users as UsersExtended;
 	
 	if (updated) {
 		const { roles } = this.values;
 		
-		for (const userDoc of updated) {
-			const user = users.get(userDoc._id);
+		for (const userExtension of updated) {
+			const user = users.get(userExtension._id)!;
 			
-			user.roles = roles.getAll(userDoc.roleIds);
+			user.roles = roles.getAll(userExtension.roleIds);
 		}
 	} else
 		for (const user of users.sorted)
