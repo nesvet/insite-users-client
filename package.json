@@ -25,7 +25,7 @@
   "dependencies": {
     "@nesvet/n": "^1.1.7",
     "insite-common": "^2.0.0",
-    "insite-subscriptions-client": "^2.0.2"
+    "insite-subscriptions-client": "^2.0.3"
   },
   "devDependencies": {
     "@nesvet/conveyer": "^2.2.4",
