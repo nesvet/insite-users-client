@@ -29,9 +29,9 @@ type UserExtension = {
 	roleIds: string[];
 };
 
-export type UserExtended = {
+export type UserExtended = User & {
 	roles?: Role;
-} & User;
+};
 
 export type Users = SubscriptionMapWithSubscription<User>;
 
@@ -39,7 +39,7 @@ export type UsersExtended = SubscriptionMapWithSubscription<UserExtended>;
 
 
 /** @this UsersSubscriptionGroup */
-export function handleUsers(this: UsersSubscriptionGroup, updated: null | SubscriptionMapUpdated<User>) {
+export function handleUsers(this: UsersSubscriptionGroup, updated: SubscriptionMapUpdated<User> | null) {
 	if (updated) {
 		const users = this.values.users as Users;
 		const currentUser = this.values.user as CurrentUser;
@@ -106,7 +106,7 @@ export function handleUsers(this: UsersSubscriptionGroup, updated: null | Subscr
 }
 
 /** @this UsersSubscriptionGroup */
-export function handleExtendedUsers(this: UsersSubscriptionGroup, updated: null | SubscriptionMapUpdated<UserExtension>) {
+export function handleExtendedUsers(this: UsersSubscriptionGroup, updated: SubscriptionMapUpdated<UserExtension> | null) {
 	
 	const users = this.values.users as UsersExtended;
 	
