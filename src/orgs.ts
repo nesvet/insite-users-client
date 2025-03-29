@@ -8,10 +8,10 @@ export type Org = {
 	_id: string;
 	title: string;
 	isOrg: true;
-	users: { sorted: User[] } & Set<User>;
+	users: Set<User> & { sorted: User[] };
 };
 
-export type NullOrg = { _id: null } & Omit<Org, "_id">;
+export type NullOrg = Omit<Org, "_id"> & { _id: null };
 
 type OrgExtension = {
 	_id: string;
@@ -20,12 +20,12 @@ type OrgExtension = {
 	note: string;
 };
 
-export type OrgExtended = {
+export type OrgExtended = Org & {
 	owners?: (OrgExtended | User)[];
 	slaveOrgs?: OrgExtended[];
 	note?: string;
 	_l?: number;
-} & Org;
+};
 
 type OrgsExtra = {
 	null: NullOrg;
@@ -33,9 +33,9 @@ type OrgsExtra = {
 
 export type Orgs = OrgsExtra & SubscriptionMapWithSubscription<Org>;
 
-export type OrgsExtended = {
+export type OrgsExtended = OrgsExtra & SubscriptionMapWithSubscription<OrgExtended> & {
 	sortedHierarchically?: OrgExtended[];
-} & OrgsExtra & SubscriptionMapWithSubscription<OrgExtended>;
+};
 
 
 export function handleOrgsBeforeSubscribe(orgs: Orgs) {
@@ -49,7 +49,7 @@ export function handleOrgsBeforeSubscribe(orgs: Orgs) {
 }
 
 /** @this UsersSubscriptionGroup */
-export function handleOrgs(this: UsersSubscriptionGroup, updated: null | SubscriptionMapUpdated<Org>) {
+export function handleOrgs(this: UsersSubscriptionGroup, updated: SubscriptionMapUpdated<Org> | null) {
 	if (updated)
 		for (const org of updated.added) {
 			org.isOrg = true;
@@ -64,7 +64,7 @@ export function handleOrgs(this: UsersSubscriptionGroup, updated: null | Subscri
 }
 
 /** @this UsersSubscriptionGroup */
-export function handleExtendedOrgs(this: UsersSubscriptionGroup, updated: null | SubscriptionMapUpdated<OrgExtension>) {
+export function handleExtendedOrgs(this: UsersSubscriptionGroup, updated: SubscriptionMapUpdated<OrgExtension> | null) {
 	
 	const orgs = this.values.orgs as OrgsExtended;
 	

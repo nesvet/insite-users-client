@@ -14,7 +14,7 @@ export type Roles = SubscriptionMapWithSubscription<Role>;
 
 
 /** @this UsersSubscriptionGroup */
-export function handleRoles(this: UsersSubscriptionGroup, updated: null | SubscriptionMapUpdated<Role>) {
+export function handleRoles(this: UsersSubscriptionGroup, updated: SubscriptionMapUpdated<Role> | null) {
 	if (updated) {
 		const roles = this.values.roles as Roles;
 		

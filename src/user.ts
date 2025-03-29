@@ -4,7 +4,7 @@ import type { User, UserExtended } from "./users";
 import type { UsersSubscriptionGroup } from "./UsersSubscriptionGroup";
 
 
-export type CurrentUser<AS extends AbilitiesSchema = AbilitiesSchema> = {
+export type CurrentUser<AS extends AbilitiesSchema = AbilitiesSchema> = UserExtended & {
 	abilities: Abilities<AS>;
 	sessionId?: string;
 	slaveIds: string[];
@@ -12,7 +12,7 @@ export type CurrentUser<AS extends AbilitiesSchema = AbilitiesSchema> = {
 	slaves: (Org | User)[];
 	slaveUsers: User[];
 	slaveOrgs: Org[];
-} & UserExtended;
+};
 
 
 /** @this UsersSubscriptionGroup */

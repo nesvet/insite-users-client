@@ -42,7 +42,6 @@ export class UsersSubscriptionGroup extends SubscriptionGroup<typeof basisDefini
 			});
 		}
 		
-		return null;
 	}
 	
 	unextend() {
