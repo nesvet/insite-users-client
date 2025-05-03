@@ -76,9 +76,9 @@ export function handleUsers(this: UsersSubscriptionGroup, updated: SubscriptionM
 				user.org = org;
 				user.org.users.add(user);
 				user.org.users.sorted.push(user);
-				
-				orgsToSortUsers.add(user.org);
 			}
+			
+			orgsToSortUsers.add(user.org);
 			
 			if (user === currentUser)
 				shouldUpdateUser = true;
