@@ -82,7 +82,6 @@ export function handleUsers(this: UsersSubscriptionGroup, updated: SubscriptionM
 			
 			if (user === currentUser)
 				shouldUpdateUser = true;
-			
 		}
 		
 		for (const org of orgsToSortUsers)

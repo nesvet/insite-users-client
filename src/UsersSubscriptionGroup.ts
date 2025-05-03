@@ -25,7 +25,6 @@ const extendedDefinitions = [
 export class UsersSubscriptionGroup extends SubscriptionGroup<typeof basisDefinitions | typeof extendedDefinitions> {
 	constructor(options: SubscriptionGroupOptions) {
 		super(basisDefinitions, options);
-		
 	}
 	
 	isExtended: boolean | null = false;
@@ -41,7 +40,6 @@ export class UsersSubscriptionGroup extends SubscriptionGroup<typeof basisDefini
 				
 			});
 		}
-		
 	}
 	
 	unextend() {
