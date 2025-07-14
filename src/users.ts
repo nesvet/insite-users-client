@@ -1,7 +1,7 @@
 import { getAll, removeOne } from "@nesvet/n";
 import type { SubscriptionMapUpdated, SubscriptionMapWithSubscription } from "insite-subscriptions-client";
 import type { NullOrg, Org, Orgs } from "./orgs";
-import type { Role } from "./roles";
+import type { Role, Roles } from "./roles";
 import type { CurrentUser } from "./user";
 import type { UsersSubscriptionGroup } from "./UsersSubscriptionGroup";
 
@@ -30,7 +30,7 @@ type UserExtension = {
 };
 
 export type UserExtended = User & {
-	roles?: Role;
+	roles?: Role[];
 };
 
 export type Users = SubscriptionMapWithSubscription<User>;
@@ -110,7 +110,7 @@ export function handleExtendedUsers(this: UsersSubscriptionGroup, updated: Subsc
 	const users = this.values.users as UsersExtended;
 	
 	if (updated) {
-		const { roles } = this.values;
+		const roles = this.values.roles as Roles;
 		
 		for (const userExtension of updated) {
 			const user = users.get(userExtension._id)!;
