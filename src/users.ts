@@ -1,4 +1,4 @@
-import { removeOne } from "@nesvet/n";
+import { getAll, removeOne } from "@nesvet/n";
 import type { SubscriptionMapUpdated, SubscriptionMapWithSubscription } from "insite-subscriptions-client";
 import type { NullOrg, Org, Orgs } from "./orgs";
 import type { Role } from "./roles";
@@ -115,7 +115,7 @@ export function handleExtendedUsers(this: UsersSubscriptionGroup, updated: Subsc
 		for (const userExtension of updated) {
 			const user = users.get(userExtension._id)!;
 			
-			user.roles = roles.getAll(userExtension.roleIds);
+			user.roles = getAll(roles, userExtension.roleIds, true);
 		}
 	} else
 		for (const user of users.sorted)
