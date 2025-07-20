@@ -1,18 +1,5 @@
-import type { Abilities, AbilitiesSchema } from "insite-common";
-import type { Org } from "./orgs";
-import type { User, UserExtended } from "./users";
+import type { CurrentUser } from "./types";
 import type { UsersSubscriptionGroup } from "./UsersSubscriptionGroup";
-
-
-export type CurrentUser<AS extends AbilitiesSchema = AbilitiesSchema> = UserExtended & {
-	abilities: Abilities<AS>;
-	sessionId?: string;
-	slaveIds: string[];
-	slavesSnapshot: string;
-	slaves: (Org | User)[];
-	slaveUsers: User[];
-	slaveOrgs: Org[];
-};
 
 
 /** @this UsersSubscriptionGroup */

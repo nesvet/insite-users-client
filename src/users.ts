@@ -1,41 +1,17 @@
 import { getAll, removeOne } from "@nesvet/n";
-import type { SubscriptionMapUpdated, SubscriptionMapWithSubscription } from "insite-subscriptions-client";
-import type { NullOrg, Org, Orgs } from "./orgs";
-import type { Role, Roles } from "./roles";
-import type { CurrentUser } from "./user";
+import type { SubscriptionMapUpdated } from "insite-subscriptions-client";
+import type {
+	CurrentUser,
+	NullOrg,
+	Org,
+	Orgs,
+	Roles,
+	User,
+	UserExtension,
+	Users,
+	UsersExtended
+} from "./types";
 import type { UsersSubscriptionGroup } from "./UsersSubscriptionGroup";
-
-
-export type User = {
-	_id: string;
-	isUser: true;
-	email: string;
-	name: {
-		first: string;
-		middle: string;
-		last: string;
-	};
-	orgId: string;
-	job: string;
-	initials: string;
-	displayLabel: string;
-	avatarUrl: string;
-	isOnline: boolean;
-	org: NullOrg | Org;
-};
-
-type UserExtension = {
-	_id: string;
-	roleIds: string[];
-};
-
-export type UserExtended = User & {
-	roles?: Role[];
-};
-
-export type Users = SubscriptionMapWithSubscription<User>;
-
-export type UsersExtended = SubscriptionMapWithSubscription<UserExtended>;
 
 
 /** @this UsersSubscriptionGroup */

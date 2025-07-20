@@ -1,16 +1,7 @@
 import { getAll } from "@nesvet/n";
-import type { SubscriptionMapUpdated, SubscriptionMapWithSubscription } from "insite-subscriptions-client";
+import type { SubscriptionMapUpdated } from "insite-subscriptions-client";
+import type { Role, Roles } from "./types";
 import type { UsersSubscriptionGroup } from "./UsersSubscriptionGroup";
-
-
-export type Role = {
-	_id: string;
-	ownInvolves: Role[];
-	involves: Role[];
-	_l: number;
-};
-
-export type Roles = SubscriptionMapWithSubscription<Role>;
 
 
 /** @this UsersSubscriptionGroup */

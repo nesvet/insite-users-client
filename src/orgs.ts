@@ -1,41 +1,13 @@
 import { getAll } from "@nesvet/n";
-import type { SubscriptionMapUpdated, SubscriptionMapWithSubscription } from "insite-subscriptions-client";
-import type { User } from "./users";
+import type { SubscriptionMapUpdated } from "insite-subscriptions-client";
+import type {
+	Org,
+	OrgExtension,
+	Orgs,
+	OrgsExtended,
+	User
+} from "./types";
 import type { UsersSubscriptionGroup } from "./UsersSubscriptionGroup";
-
-
-export type Org = {
-	_id: string;
-	title: string;
-	isOrg: true;
-	users: Set<User> & { sorted: User[] };
-};
-
-export type NullOrg = Omit<Org, "_id"> & { _id: null };
-
-type OrgExtension = {
-	_id: string;
-	owners: string[];
-	slaveOrgs: string[];
-	note: string;
-};
-
-export type OrgExtended = Org & {
-	owners?: (OrgExtended | User)[];
-	slaveOrgs?: OrgExtended[];
-	note?: string;
-	_l?: number;
-};
-
-type OrgsExtra = {
-	null: NullOrg;
-};
-
-export type Orgs = OrgsExtra & SubscriptionMapWithSubscription<Org>;
-
-export type OrgsExtended = OrgsExtra & SubscriptionMapWithSubscription<OrgExtended> & {
-	sortedHierarchically?: OrgExtended[];
-};
 
 
 export function handleOrgsBeforeSubscribe(orgs: Orgs) {
