@@ -8,6 +8,23 @@ import { handleRoles } from "./roles";
 import { handleUser } from "./user";
 import { handleExtendedUsers, handleUsers } from "./users";
 import type { UsersSubscriptionGroupOptions } from "./types";
+
+
+export class UsersSubscriptionGroup extends SubscriptionGroup<[
+	[ "orgs", SubscriptionMapWithSubscription | "map", typeof handleOrgs, typeof handleOrgsBeforeSubscribe ],
+	[ "users", SubscriptionMapWithSubscription | "map", typeof handleUsers ],
+	[ "user", SubscriptionObjectWithSubscription | [ true ], typeof handleUser ]
+] | [
+	[ "roles", "map", typeof handleRoles ],
+	[ "extendedUsers", "map", "users.extended", typeof handleExtendedUsers, true ],
+	[ "extendedOrgs", "map", "orgs.extended", typeof handleExtendedOrgs, true ]
+]> {
+	constructor({ values, ...options }: UsersSubscriptionGroupOptions) {
+		super([
+			[ "orgs", values?.orgs ?? "map", handleOrgs, handleOrgsBeforeSubscribe ],
+			[ "users", values?.users ?? "map", handleUsers ],
+			[ "user", values?.user ?? [ true ], handleUser ]
+		], options);
 	}
 	
 	isExtended: boolean | null = false;
@@ -17,7 +34,11 @@ import type { UsersSubscriptionGroupOptions } from "./types";
 		if (this.isExtended === false) {
 			this.isExtended = null;
 			
-			return this.attach(extendedDefinitions).then(() => {
+			return this.attach([
+				[ "roles", "map", handleRoles ],
+				[ "extendedUsers", "map", "users.extended", handleExtendedUsers, true ],
+				[ "extendedOrgs", "map", "orgs.extended", handleExtendedOrgs, true ]
+			]).then(() => {
 				
 				this.isExtended = true;
 				
@@ -33,23 +54,6 @@ import type { UsersSubscriptionGroupOptions } from "./types";
 			this.detach([ "roles", "extendedUsers", "extendedOrgs" ]);
 		}
 		
-	}
-	
-	
-	static handleValues({
-		orgs,
-		users,
-		user
-	}: {
-		orgs: SubscriptionMapWithSubscription;
-		users: SubscriptionMapWithSubscription;
-		user: SubscriptionObjectWithSubscription;
-	}, options: SubscriptionGroupOptions) {
-		return new SubscriptionGroup([
-			[ "orgs", orgs, handleOrgs, handleOrgsBeforeSubscribe ],
-			[ "users", users, handleUsers ],
-			[ "user", user, handleUser ]
-		], options);
 	}
 	
 }
