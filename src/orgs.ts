@@ -14,6 +14,8 @@ export function handleOrgsBeforeSubscribe(orgs: Orgs) {
 	orgs.null = {
 		_id: null,
 		title: "",
+		initials: "—",
+		displayLabel: "—",
 		isOrg: true,
 		users: Object.assign(new Set<User>(), { sorted: [] })
 	};

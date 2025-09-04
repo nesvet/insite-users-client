@@ -17,6 +17,8 @@ export type UsersSubscriptionGroupOptions = SubscriptionGroupOptions & {
 export type Org = {
 	_id: string;
 	title: string;
+	initials: string;
+	displayLabel: string;
 	isOrg: true;
 	users: Set<User> & { sorted: User[] };
 };
