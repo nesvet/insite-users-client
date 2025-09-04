@@ -1,6 +1,6 @@
 {
 	"name": "insite-users-client",
-	"version": "2.3.4",
+	"version": "2.3.5",
 	"description": "inSite users client side",
 	"type": "module",
 	"main": "./dist/index.js",
